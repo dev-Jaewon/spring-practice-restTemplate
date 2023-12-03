@@ -9,6 +9,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.smartFarmer.server.contentsProvider.Dto.ResponseDetailExampleDto;
 import com.smartFarmer.server.contentsProvider.Dto.ResponseExampleListDto;
+import com.smartFarmer.server.contentsProvider.Dto.ResponsePolicyDetail;
 import com.smartFarmer.server.contentsProvider.Dto.ResponsePolicyList;
 import com.smartFarmer.server.contentsProvider.Dto.SearchExampleListDto;
 import com.smartFarmer.server.contentsProvider.Dto.SearchPolicyList;
@@ -43,8 +44,15 @@ public class ContentsProviderServiceImpl implements ContentsProviderService {
     };
 
     @Override
-    public String detailPolicy() {
-        return "";
+    public ResponseEntity<ResponsePolicyDetail> detailPolicy(String postNumber) {
+        URI uri = UriComponentsBuilder.fromHttpUrl(URL)
+                .path("/policyViewV2")
+                .queryParam("typeDv", "json")
+                .queryParam("serviceKey", KEY)
+                .queryParam("seq", postNumber)
+                .build(true).toUri();
+
+        return ResponseEntity.ok().body(restTemplate.getForObject(uri, ResponsePolicyDetail.class));
     };
 
     @Override
