@@ -9,8 +9,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.smartFarmer.server.contentsProvider.Dto.ResponseDetailExampleDto;
 import com.smartFarmer.server.contentsProvider.Dto.ResponseExampleListDto;
+import com.smartFarmer.server.contentsProvider.Dto.ResponsePolicyList;
 import com.smartFarmer.server.contentsProvider.Dto.SearchExampleListDto;
-import com.smartFarmer.server.contentsProvider.Dto.SearchPolicyListDto;
+import com.smartFarmer.server.contentsProvider.Dto.SearchPolicyList;
 
 import java.net.URI;
 
@@ -27,8 +28,18 @@ public class ContentsProviderServiceImpl implements ContentsProviderService {
     private String URL;
 
     @Override
-    public String policyList(SearchPolicyListDto searchInfo) {
-        return "";
+    public ResponseEntity<ResponsePolicyList> policyList(SearchPolicyList searchInfo) {
+        URI uri = UriComponentsBuilder.fromHttpUrl(URL)
+                .path("/policyListV2")
+                .queryParam("typeDv", "json")
+                .queryParam("serviceKey", KEY)
+                .queryParam("cp", searchInfo.getPage())
+                .queryParam("rowCnt", searchInfo.getPerPage())
+                .queryParam("search_area1", searchInfo.getArea1())
+                .queryParam("search_keyword", searchInfo.getKeyWord())
+                .build(true).toUri();
+
+        return ResponseEntity.ok().body(restTemplate.getForObject(uri, ResponsePolicyList.class));
     };
 
     @Override
