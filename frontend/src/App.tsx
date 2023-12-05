@@ -1,14 +1,22 @@
-import { useState } from 'react'
 import './App.css'
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { Home } from './components/templates/Home'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: false,
+        staleTime: 30000,
+      },
+    },
+  });
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <Home />
-    </>
+    </QueryClientProvider>
   )
 }
 
