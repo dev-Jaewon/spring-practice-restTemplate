@@ -1,301 +1,92 @@
+import styled from '@emotion/styled'
 
-// "seq": "10356",
-// "typeDv": "policy",
-// "title": "K-lab 라오스 협력지원사업 &#39;24년 참여기업 모집",
-// "contents": "○사업내용-동남아시아(라오스)진출지원멘토링-현지채용(라오스)지원을위한채용설명회(라오스공대)-라오스현지시장조사지원(현지항공숙박등)-현지창업생태계발전및기업가정신향상교육-라오스현지시장조사지원(현지항공숙박등)-현지창업생태계발전및기업가정신항상교육-라오스및동남아시아사업진출네트워크지원○신청방법-온라인신청((사)벤처기업협회홈페이지신청)",
-// "applStDt": "2023-11-27",
-// "applEdDt": "2023-12-06",
-// "price": null,
-// "totQuantity": "5",
-// "chargeAgency": "(사)벤처기업협회",
-// "eduStDt": null,
-// "eduEdDt": null,
-// "eduTime": null,
-// "eduCnt": null,
-// "eduMethod": null,
-// "eduMethod2": null,
-// "eduMethod3": null,
-// "eduTarget": "동남아아시아(라오스 등) 현지 진출 희망 중소,벤처기업(5개사 내외)",
-// "area1Nm": null,
-// "area2Nm": null,
-// "chargeDept": "글로벌지원팀",
-// "chargeTel": "02-633-7089, 7083",
-// "infoUrl": "https://www.venture.or.kr/#/home/bizNotice/h020101D/9538/1/1"
-
+import { ResponsePolicy } from "../../../types/responsePolicyList";
 import { Column } from "../../moecules/Column";
+import { PolicyFilter } from "../../moecules/PolicyFilter";
+import { useState } from 'react';
 
 
-interface DataType {
-    "seq": String,
-    "typeDv": String,
-    "title": String,
-    "contents": String,
-    "applStDt": String,
-    "applEdDt": String,
-    "price": null | String,
-    "totQuantity": null | String,
-    "chargeAgency": null | String,
-    "eduStDt": null,
-    "eduEdDt": null,
-    "eduTime": null,
-    "eduCnt": null,
-    "eduMethod": null,
-    "eduMethod2": null,
-    "eduMethod3": null,
-    "eduTarget": String,
-    "area1Nm": null,
-    "area2Nm": null,
-    "chargeDept": String | null,
-    "chargeTel": String | null,
-    "infoUrl": String
+interface DataListType {
+  isLoading: boolean;
+  policyList: ResponsePolicy | undefined;
 }
 
+const PER_PAGE_LIST = [10, 20, 30, 40];
 
+export const DataList = (props: DataListType) => {
+  const [perPage, setPerpage] = useState(20);
 
+  const handleClickPerPage = (perPage: number) => {
+    setPerpage(perPage)
+  }
 
-export const DataList = () => {
-    return (<Column />);
+  return <Container>
+    <PolicyFilter></PolicyFilter>
+    <ListContainer>
+      <FilterContainer>sdf
+        <PerpageList>
+          {PER_PAGE_LIST.map(num => <PerPage onClick={() => handleClickPerPage(num)} num={num} perPage={perPage}>{num}개씩 보기</PerPage>)}
+        </PerpageList>
+      </FilterContainer>
+      <div>
+        {
+          !props.isLoading ? <div>{
+            props.policyList?.policy_list.map(info =>
+              <Column info={info} key={info.seq} />
+            )
+          }</div> : <div>로딩중</div>
+        }
+      </div>
+    </ListContainer>
+  </Container>
 }
 
-const data: DataType[] = [
-    {
-      "seq": "10356",
-      "typeDv": "policy",
-      "title": "K-lab 라오스 협력지원사업 &#39;24년 참여기업 모집",
-      "contents": "○사업내용-동남아시아(라오스)진출지원멘토링-현지채용(라오스)지원을위한채용설명회(라오스공대)-라오스현지시장조사지원(현지항공숙박등)-현지창업생태계발전및기업가정신향상교육-라오스현지시장조사지원(현지항공숙박등)-현지창업생태계발전및기업가정신항상교육-라오스및동남아시아사업진출네트워크지원○신청방법-온라인신청((사)벤처기업협회홈페이지신청)",
-      "applStDt": "2023-11-27",
-      "applEdDt": "2023-12-06",
-      "price": null,
-      "totQuantity": "5",
-      "chargeAgency": "(사)벤처기업협회",
-      "eduStDt": null,
-      "eduEdDt": null,
-      "eduTime": null,
-      "eduCnt": null,
-      "eduMethod": null,
-      "eduMethod2": null,
-      "eduMethod3": null,
-      "eduTarget": "동남아아시아(라오스 등) 현지 진출 희망 중소,벤처기업(5개사 내외)",
-      "area1Nm": null,
-      "area2Nm": null,
-      "chargeDept": "글로벌지원팀",
-      "chargeTel": "02-633-7089, 7083",
-      "infoUrl": "https://www.venture.or.kr/#/home/bizNotice/h020101D/9538/1/1"
-    },
-    {
-      "seq": "10335",
-      "typeDv": "policy",
-      "title": "2023년도 aT 수출보험 지원사업 추가모집 공고",
-      "contents": "환변동보험-일반형:가입조험료의95%-옵션형(부분/완전보장):가입조험료의95%-단기수출보험-일반선적후:가입보험료의90%-농수산물패키지:가입보험료의90%-중소중견플러스단체보험:가입보험료의100%*환변동보험,단기수출보험모두업체당연간1억원한도지원문의:농임수출부김도후,",
-      "applStDt": "2023-11-16",
-      "applEdDt": "2023-12-31",
-      "price": "100000",
-      "totQuantity": null,
-      "chargeAgency": "aT수출종합지원시스템",
-      "eduStDt": null,
-      "eduEdDt": null,
-      "eduTime": null,
-      "eduCnt": null,
-      "eduMethod": null,
-      "eduMethod2": null,
-      "eduMethod3": null,
-      "eduTarget": "농산식품 수출업체",
-      "area1Nm": null,
-      "area2Nm": null,
-      "chargeDept": "농임수출부",
-      "chargeTel": "061-931-0848",
-      "infoUrl": "https://global.at.or.kr/front/bizReq/brView.do?proj_id=7767&proj_detail_id=0"
-    },
-    {
-      "seq": "10298",
-      "typeDv": "policy",
-      "title": "2024년 독일 뉴렌버그 애완동물용품 전시회(INTERZOO) 한국관 참가기업 지원",
-      "contents": "ㅇ 사업대상: 애완동물 식품 및 용품 관련 기업  ※ 세부내용 공고문 참조ㅇ 사업기간: 자세한 사항은 홈페이지 참조ㅇ 사업내용: - KOTRA와 (사)한국펫산업수출협회는 2024년 5월 7일 ~ 5월 10일 (4일간) 독일 뉴렌버그에서 개최되는 2024 독일 뉴렌버그  애완동물용품 전시회(INTERZOO) 한국관 참가기업을 아래와 같이 모집하오니 관심기업들의 많은 신청 바랍니다.   ☞ 부스임차료, 장치비, 운송비 1CBM 편도, 한국관 디렉토리 제작비, 행정, 마케팅 및 홍보, 통역원, 현장지원 등ㅇ 신청방법: 온라인 접수 아래 4가지 신청을 모두 완료해야 최종 신청 완료로 간주 ① KOTRA 무역투자24 또는 글로벌 전시포털(GEP) 온라인 신청 ② 신청서류 이메일 제출 - 제출처 : (사)한국펫산업수출협회, 서정호 이사  ③ buyKOREA 온라인 상품정보 등록/갱신 (23년 이전에 등록한 상품은 올해 기준으로 갱신 필수) ④ 참가 신청금 납부ㅇ 문의: (사)한국펫산업수출협회 서정호 이사 (02-359-3853 / ) 및 공고문 참조",
-      "applStDt": "2023-11-06",
-      "applEdDt": "2023-12-05",
-      "price": null,
-      "totQuantity": null,
-      "chargeAgency": "(사)한국펫산업수출협회",
-      "eduStDt": null,
-      "eduEdDt": null,
-      "eduTime": null,
-      "eduCnt": null,
-      "eduMethod": null,
-      "eduMethod2": null,
-      "eduMethod3": null,
-      "eduTarget": "펫관련업체",
-      "area1Nm": null,
-      "area2Nm": null,
-      "chargeDept": "협회",
-      "chargeTel": "02-359-3853",
-      "infoUrl": "https://www.bizinfo.go.kr/web/lay1/bbs/S1T122C128/AS/74/view.do?pblancId=PBLN_000000000092616"
-    },
-    {
-      "seq": "10296",
-      "typeDv": "policy",
-      "title": "2024년도 농지이양은퇴직불사업 예비사업대상자 신청 안내",
-      "contents": "ㅇ 사업대상: 모집공고일 현재 10년 이상 계속해서 농업경영을 하고 있는 65세 이상 79세 이하 농업인  ※ 세부내용 공고문 참조ㅇ 사업기간: 자세한 사항은 홈페이지 참조ㅇ 사업내용: - 고령농업인의 노후 소득 안정을 도모하고 청년농업인에게 농지이양을 유도하기 위하여   3년 이상 계속해서 소유 중인 진흥지역 농지 및 경지정리된 비진흥지역의  농지를 매도 및 매도조건부 임대를 통해 보조금 지급 ㅇ 신청방법: 농지소재지 지사 방문 예비 신청ㅇ 문의: *농지은행포털 내 정보마당  지사찾기 를 통해 지사 전화번호를 확인하실 수 있습니다.",
-      "applStDt": "2023-11-01",
-      "applEdDt": "2024-12",
-      "price": null,
-      "totQuantity": null,
-      "chargeAgency": "농지은행,농지연금",
-      "eduStDt": null,
-      "eduEdDt": null,
-      "eduTime": null,
-      "eduCnt": null,
-      "eduMethod": null,
-      "eduMethod2": null,
-      "eduMethod3": null,
-      "eduTarget": "농지소유 고령농업인",
-      "area1Nm": null,
-      "area2Nm": null,
-      "chargeDept": "농지은행지사",
-      "chargeTel": null,
-      "infoUrl": "https://www.fbo.or.kr/info/bbs/NoticeView.do?menuId=080010&schNtceClsfCd=B01010100&ntceMngid=202300000225"
-    },
-    {
-      "seq": "10297",
-      "typeDv": "policy",
-      "title": "중기전용판매장(면세) 입점지원 공고",
-      "contents": "ㅇ 사업대상: 중기업, 소기업, 소상공인  ※ 세부내용 공고문 참조ㅇ 사업기간: 자세한 사항은 홈페이지 참조ㅇ 사업내용: - 중소기업제품 전용판매장을 통해 우수ㆍ유망 제품의 시장 반응 조사와 유통망 연계 등을 지원해 드리는 사업입니다.  ☞ 중소기업제품 전용판매장 입점 지원 - 제품 판매, 전시, 홍보를 위한 인테리어 및 매장 공간 제공, 판매 전문 인력을 통한 판촉, 홍보 지원 - 유동인구가 많은 지역을 대상으로 독립매장 형식으로 운영 - 소비자 인지도 제고 및 판촉, 홍보기회 제공ㅇ 신청방법: 온라인 접수ㅇ 문의: 중기제품 전용면세점 담당자(032-743-5191~2)",
-      "applStDt": "2023-11-01",
-      "applEdDt": "2023-12-31",
-      "price": null,
-      "totQuantity": null,
-      "chargeAgency": "중소벤처기업부",
-      "eduStDt": null,
-      "eduEdDt": null,
-      "eduTime": null,
-      "eduCnt": null,
-      "eduMethod": null,
-      "eduMethod2": null,
-      "eduMethod3": null,
-      "eduTarget": "중기업, 소기업, 소상공인",
-      "area1Nm": null,
-      "area2Nm": null,
-      "chargeDept": "중기제품 전용면세점",
-      "chargeTel": "032-743-5191~2",
-      "infoUrl": "https://www.bizinfo.go.kr/web/lay1/bbs/S1T122C128/AS/74/view.do?pblancId=PBLN_000000000092595"
-    },
-    {
-      "seq": "10038",
-      "typeDv": "policy",
-      "title": "2023년 농식품 수출통합·선도조직 육성사업 신규 모집공고 안내",
-      "contents": "ㅇ 사업대상: 농식품(신선 및 가공농산물) 수출업체 및 농가 - 업체당 연1회 중복지원 불가ㅇ 사업기간: 2023-07-28 ~ 2023-12-31(예산소진시 조기마감 가능)ㅇ 사업내용: - 농산물 수출업체가 생산자의 재배 ~ 수출까지 일관 수행으로 수출확대 선도  * 공동브랜드, 매뉴얼 운영, 해외시장 개척 수행 등 마켓팅 보두 역활 수행   ☞ 24년 물류비 폐지에 따른 사업구조 전면 개편 진행중으로 세부지원은 추후확정ㅇ 신청방법: 온라인 접수 - aT수출종합지원시스템 https://global.at.or.kr)통한 온라인 접수ㅇ 문의: 전주현, aT농임산수출부, 061-931-0824,  -(주관사) 한유빈, aT수출정보분석부, 061-931-0875, ",
-      "applStDt": "2023-07-28",
-      "applEdDt": "2023-12-31",
-      "price": null,
-      "totQuantity": null,
-      "chargeAgency": "aT한국농수산식품유통공사",
-      "eduStDt": null,
-      "eduEdDt": null,
-      "eduTime": null,
-      "eduCnt": null,
-      "eduMethod": null,
-      "eduMethod2": null,
-      "eduMethod3": null,
-      "eduTarget": "농식품 수출 및 농가",
-      "area1Nm": null,
-      "area2Nm": null,
-      "chargeDept": "aT농임산수출부",
-      "chargeTel": "061-931-0875",
-      "infoUrl": "https://global.at.or.kr/front/bizReq/brView.do"
-    },
-    {
-      "seq": "9864",
-      "typeDv": "policy",
-      "title": "2023년 농식품 수출기업 콘텐츠 제작 참여업체 모집",
-      "contents": "ㅇ 사업대상: 식품 수출기업 또는 농식품 수출을 희망하는 기업 - 공사 수출지원종합시스템에 가입되어 있으면서 - 공사 트라스에서 무역통계정보제공 동의서를 제출한 기업ㅇ 사업기간: 모집 완료시까지ㅇ 사업내용: 전문 스튜디오를 통한 농식품 기업의 수출제품 온라인 콘텐츠(사진, 영상, 상세페이지) 제작 지원ㅇ 신청방법: aT디지털스튜디오(global-atstudio.co.kr)  신청하기",
-      "applStDt": "2023-07-05",
-      "applEdDt": "2023-12-31",
-      "price": null,
-      "totQuantity": null,
-      "chargeAgency": "aT한국농수산식품유통공사",
-      "eduStDt": null,
-      "eduEdDt": null,
-      "eduTime": null,
-      "eduCnt": null,
-      "eduMethod": null,
-      "eduMethod2": null,
-      "eduMethod3": null,
-      "eduTarget": "농식품 수출기업",
-      "area1Nm": null,
-      "area2Nm": null,
-      "chargeDept": "aT스튜디오",
-      "chargeTel": "02-6300-2902",
-      "infoUrl": "https://www.at.or.kr/article/apko364000/view.action?articleId=44274"
-    },
-    {
-      "seq": "10376",
-      "typeDv": "policy",
-      "title": "중소기업유통센터 온라인쇼핑몰 입점지원 사업",
-      "contents": "○주요내용-소상공인상품을온라인쇼핑몰에입점판매하여상품의안정적인판로구축을지원합니다-자부담없는사업으로소상공인분들의많은참여부탁드립니다○지원대상-소상공인기본법에의거한소상공인○지원내용-민간온라인쇼핑몰내소상공인특별기획전구성,할인쿠폰등다양한프로모션지원-(해당채널)쿠팡,11번가,티몬,인터파크,지마켓(옥션),AK몰,GSShop,SSG(이마트몰),농협몰,롯데몰,오아시스(킴스오아시스),우체국쇼핑,등국내온라인쇼핑몰40개사문의처",
-      "applStDt": "2023-05-04",
-      "applEdDt": "2023-12-31",
-      "price": null,
-      "totQuantity": null,
-      "chargeAgency": "중소기업유통센터",
-      "eduStDt": null,
-      "eduEdDt": null,
-      "eduTime": null,
-      "eduCnt": null,
-      "eduMethod": null,
-      "eduMethod2": null,
-      "eduMethod3": null,
-      "eduTarget": "○ 일반기업, 1인 창조기업  - 창업기간: 1년미만, 2년미만, 3년미만, 5년미만, 7년미만, 10년미만",
-      "area1Nm": null,
-      "area2Nm": null,
-      "chargeDept": "디지털판로팀",
-      "chargeTel": "02-6678-9375, 9875",
-      "infoUrl": "https://www.k-startup.go.kr/web/contents/bizpbanc-ongoing.do?schM=view&pbancSn=164610&page=11&schStr=regist&pbancEndYn=N"
-    },
-    {
-      "seq": "9863",
-      "typeDv": "policy",
-      "title": "2023년 우체국쇼핑몰 온라인 브랜드관 입점기업 상시모집 공고",
-      "contents": "ㅇ 사업대상: 아래 두개의 조건을 만족하는 자 - (필수 1) 2023년 농식품 벤처창업 활성화 지원사업 참가기업 * 자세한 세부사업 내역은 (양식 1) 입점신청서에서 확인가능 - (필수 2) 우체국소포(택배)를 이용한 제품발송이 가능한 기업ㅇ 사업기간: 2023-05-01 ~ 2023-12-31ㅇ 사업내용: 낮은 소비자 인지도로 매출 확보에 어려움을 겪는 창업기업을 지원하기 위해        우체국쇼핑몰과 협업을 통한 온라인 판로 기반 마련ㅇ 신청방법: - (1차/자격검토) 농식품 창업정보망(www.a-startups.or.kr) 온라인 접수 - (2차/입점심사) 「1차 자격검토」에 통과한(통보를 받은) 기업에 한하여 아래 제출 서류를 구비 후           이메일로 접수() - 사업문의 : 한국농업기술진흥원 최진수 063-919 - 1433  - 우체국쇼핑 입점문의 : 042-609-4298  - 한국우편사업진흥원(우체국쇼핑 담당) 임경민 042-723-3406 ",
-      "applStDt": "2023-05-01",
-      "applEdDt": "2023-12-31",
-      "price": null,
-      "totQuantity": null,
-      "chargeAgency": "한국농업기술진흥원",
-      "eduStDt": null,
-      "eduEdDt": null,
-      "eduTime": null,
-      "eduCnt": null,
-      "eduMethod": null,
-      "eduMethod2": null,
-      "eduMethod3": null,
-      "eduTarget": "농식품",
-      "area1Nm": null,
-      "area2Nm": null,
-      "chargeDept": null,
-      "chargeTel": "063-919 - 1433",
-      "infoUrl": "https://www.a-startups.or.kr/planweb/board/view.9is?dataUid=4028b20286959cd10187c0fd60007d71&page=1&boardUid=ba6550717457c60f01747698c25f0569&contentUid=ba6550717457c60f0174677a1e340062&layoutUid=&searchType=&keyword=&categoryUid1=ba6550717457c60f0174d7871f241d53&categoryUid2=&cateogryUid3="
-    },
-    {
-      "seq": "9599",
-      "typeDv": "policy",
-      "title": "2023년 승용마 생산농가 현장 컨설팅 지원",
-      "contents": "ㅇ 사업대상: 말 승용마 육성 농가 컨설팅 지원ㅇ 사업기간: 2023년 5월12월 - 23년도 예산 조기 소진시 사업 조기 종료 가능ㅇ 사업금액: 25백만원(약 60회)ㅇ 사업내용: 승용마 생산농가 취약분야 지원을 통한 생산농가 경영 여건 개선 및 기술력 제고 - 사양-보건, 장제-삭제, 순치-조련(3개 분야 지원) - 간접지원컨설팅 전문가 지원",
-      "applStDt": "2023-05",
-      "applEdDt": "2023-12",
-      "price": "25,000",
-      "totQuantity": "60",
-      "chargeAgency": "한국마사회",
-      "eduStDt": null,
-      "eduEdDt": null,
-      "eduTime": null,
-      "eduCnt": null,
-      "eduMethod": null,
-      "eduMethod2": null,
-      "eduMethod3": null,
-      "eduTarget": "말육성농가",
-      "area1Nm": null,
-      "area2Nm": null,
-      "chargeDept": "말산업육성부",
-      "chargeTel": "02-509-2983",
-      "infoUrl": "https://www.horsepia.com/hp/pa/cc/CC0010C/view.do?cms=001/1194325_1429.jsp"
+const Container = styled.div`
+`;
+
+const ListContainer = styled.div`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+`;
+
+const FilterContainer = styled.div`
+  background-color: #fafafa;
+  padding: 0 30px;
+
+  @media screen and (max-width: 600px){
+    padding: 0 10px;
+  }
+`;
+
+const PerpageList = styled.ul`
+    display: flex;
+    flex-direction: column;
+    right: 30px;
+    position: absolute;
+    top: 0%;
+
+    @media screen and (max-width: 600px){
+        font-size: 12px;
+        right: 10px;
     }
-  ];
+
+    &:hover {
+        right: 50px;
+        position: absolute;
+
+        li {
+            display: flex;
+        }
+    }
+`
+
+const PerPage = styled.li<{ num: number, perPage: number }>`
+    align-items: center;
+    height: 33px;
+    padding: 0 10px;
+    display: ${({ num, perPage }) => num === perPage ? 'flex' : 'none'};
+    font-weight: ${({ num, perPage }) => num === perPage ? 600 : 500};
+    background-color: #fafafa;
+    cursor: pointer;
+`
